@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUSCADOR</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fas fa-bars"></i>
+        </label>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Inicio</a></li>
+            <li><a href="#">Playlist</a></li>
+            <li><a href="#">Contacto</a></li>
+            <li><a class="active" href="#">Buscador</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section id="search-cont">
+        <form action="#" method="POST" id="search-song">
+            <h3>BUSCADOR DE CANCIONES</h3>
+            <label for="titulo">Título de la canción:</label><br>
+            <input type="text" id="titulo" name="titulo" required><br>
+            <label for="artista">Artista de la canción:</label><br>
+            <input type="text" id="artista" name="artista" required><br><br>
+            <input type="submit" value="Buscar">
+        </form>
+    </section>
+    </main>
+    <footer>
+        <p>MUSIC RECOMMENDATION SYSTEM! Redescubre la música</p>
+    </footer>
+</body>
+</html>

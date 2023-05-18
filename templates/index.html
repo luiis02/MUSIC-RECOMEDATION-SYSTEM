@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIENVENIDO!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <input type="checkbox" id="check">
+            <label for="check" class="checkbtn">
+                <i class="fas fa-bars"></i>
+            </label>
+            
+            <ul>
+                <li><a class="active" href="#">INICIO</a></li>
+                <li><a href="#">PLAYLIST</a></li>
+                <li><a href="#">ACERCA DE</a></li>
+                <li><a href="{{ url_for('buscador') }}">BUSCADOR</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="intro">
+        <h1 id="tittle-index">BIENVENIDO A TU RECOMENDADOR DE MUSICA FAVORITA</h1>
+        <p>¡Descubre nuevas canciones y artistas basados en tus preferencias musicales!</p>
+        <p>Vaya! Parece que aun no tienes la sesion inicida, ni te has registrado...</p>
+        </section>
+        <section id="ventajas">
+        <h1>Algunas de las caracteristicas que ofrecemos</h1>
+        <ul>
+            <li>Recomendaciones personalizadas en base a tus gustos</li>
+            <li>Integracion con lista de exitos de spotify</li>
+            <li>Creación y gestiona tus listas de reproducción</li>
+            <li>Lyrics de mas de 900 millones de canciones</li>
+            <li>Redireccionamiento directo a las canciones</li>
+        </ul>
+        </section>
+        <section id="reg-init">
+            <form action="#" method="POST" id="reg-user">
+                <h3>REGISTRO:</h3>
+                <label for="username">Nombre de usuario:</label><br>
+                <input type="text" id="username" name="username" required><br>
+                <label for="name">Nombre:</label><br>
+                <input type="text" id="name" name="name" required><br>
+                <label for="subname">Apellido:</label><br>
+                <input type="text" id="subname" name="subname" required><br>
+                <label for="subname">Correo Electronico:</label><br>
+                <input type="email" id="email" name="email" required><br>
+                <label for="password">Contraseña:</label><br>
+                <input type="password" id="key" name="key" required><br>
+                <label for="password">Confirma contraseña:</label><br>
+                <input type="password" id="rekey" name="rekey" required><br>
+                <p>Al registrarse acepta la política de privacidad</p><br>
+                <input type="submit" value="Buscar">
+            </form>
+            <form action="#" method="POST" id="init-sesion">
+                <h3>INICIO SESIÓN:</h3>
+                <label for="username">Nombre de usuario:</label><br>
+                <input type="text" id="username" name="username-l" required><br>
+                <label for="password">Contraseña:</label><br>
+                <input type="password" id="key" name="key-l" required><br>
+                <input type="submit" value="Buscar">
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>MUSIC RECOMMENDATION SYSTEM! Redescubre la música</p>
+    </footer>
+</body>
+
+</html>

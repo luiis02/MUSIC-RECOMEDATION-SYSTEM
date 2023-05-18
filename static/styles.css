@@ -1,0 +1,325 @@
+*{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+body{
+    min-height: 100vh; /* Establece la altura mínima del contenido de la página */
+    display: flex;
+    flex-direction: column; /* Alinea los elementos verticalmente */
+    background-color: #e9e9e9;
+}
+main{
+    flex-grow: 1;
+}
+nav{
+    background: #303434;
+    border-bottom: 2px solid red;
+    height: 80px;
+    width: 100%;
+}
+.enlace{
+    position: absolute;
+    padding: 20px 50px;
+}
+.logo{
+    margin-top: -3vh;
+    height: 10vw;
+}
+nav ul{
+    float: right;
+    margin-right: 20px;
+}
+nav ul li{
+    display: inline-block;
+    line-height: 80px;
+    margin: 0 5px;
+}
+nav ul li a{
+    color: #fff;
+    font-size: 18px;
+    padding: 7px 13px;
+    border-radius: 3px;
+    text-transform: uppercase;
+}
+li a.active{    
+    background: #8585cf;
+    transition: .5s;
+}
+
+
+li a:hover{
+    background: #6666aa;
+    transition: .5s;
+}
+.checkbtn{
+    font-size: 30px;
+    color: #fff;
+    float: right;
+    line-height: 80px;
+    margin-right: 40px;
+    cursor: pointer;
+    display: none;
+}
+#check{
+    display: none;
+}
+/*----------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------*/
+#reg-init {
+    padding-top: 10vh;
+    width: 50%;
+    float: right;
+    border-left: 2px solid black;
+    display: flex;
+    justify-content: center;
+}
+#reg-init form {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 20px;
+}
+  
+#reg-init form:last-of-type {
+    margin-right: 0;
+}
+#intro{
+    text-align: center;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding-bottom: 3vh;
+}
+#tittle-index{
+    color: rgb(43, 38, 38);
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    font-size: 3vw;
+}
+#ventajas{
+    width: 50%;
+    float: left;
+    text-align: center;
+    padding-top: 10vh;
+}
+#ventajas ul {
+font-size: 1.2vw;
+  list-style:square;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:self-start;
+  padding-left: 10vw;
+  padding-right: 5vw;
+}
+
+#ventajas ul li {
+  padding: 10px;
+  margin: 10px;
+  text-align: justify;
+}
+footer {
+    margin-top: 5vh;
+    text-align: center;
+    height: 20px;
+    color: rgb(65, 65, 65);
+  }
+#init-sesion {
+    font-family: 1.3vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #init-sesion h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  #init-sesion label {
+    font-size: 1.2vw;
+    margin-bottom: 10px;
+  }
+  
+  #init-sesion input[type="text"],
+  #init-sesion input[type="password"] {
+    font-size: 16px;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.49);
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+  
+  #init-sesion input[type="submit"] {
+    font-size: 16px;
+    padding: 10px 20px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  #init-sesion input[type="submit"]:hover {
+    background-color: #006C9A;
+  }
+
+  #reg-user {
+    font-family: 1.3vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #reg-user h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  #reg-user label {
+    font-size: 1.2vw;
+    margin-bottom: 10px;
+  }
+  
+  #reg-user input[type="text"],
+  #reg-user input[type="password"],
+  #reg-user input[type="email"] {
+    font-size: 16px;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.49);
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+  
+  #reg-user input[type="submit"] {
+    font-size: 16px;
+    padding: 10px 20px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  #reg-user input[type="submit"]:hover {
+    background-color: #006C9A;
+  }
+  #search-cont {
+    padding-top: 2vh;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+  }
+  #search-song {
+    color: (122, 120, 120);
+    padding: 2vw;
+    border: 1px solid #ccc;
+    border-radius: 5%;
+    background-color: #b7d8d95f;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  #search-song h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  #search-song label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  #search-song input[type="text"],
+  #search-song input[type="submit"] {
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    background-color: #9ec7c575;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  #search-song input[type="submit"] {
+    background-color: #008CBA;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  #sect-table {
+    margin: 0 auto;
+    align-items: center;
+    margin-top: 2vh;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #f2f2f29d;
+    border-radius: 5%;
+  }
+  
+  #name-song {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  #table-song {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  #table-song td {
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  #table-song td:first-child {
+    font-weight: bold;
+    width: 150px;
+  }
+  
+  #table-song td:last-child {
+    text-align: center;
+  }
+  
+  #table-song a {
+    color: #008CBA;
+    text-decoration: none;
+  }
+  .container-lyr {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  #lyrics-tittle {
+    font-size: 36px;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+  }
+  
+  .lyrics-box {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 20px;
+    text-align: left;
+  }
+  
+  #p-lyrics {
+    font-size: 18px;
+    line-height: 1.5;
+    margin: 0;
+    text-align: center;
+  }
+  
+
+/*----------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------*/
+

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link rel="stylesheet" href="../static/styles.css">
+  <title>CANCIÓN</title>
+</head> 
+<body>
+  <header>
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fas fa-bars"></i>
+        </label>
+        <ul>
+            <li><a href="{{ url_for('index') }}">INICIO</a></li>
+            <li><a href="#">PLAYLIST</a></li>
+            <li><a href="#">ACERCA DE</a></li>
+            <li><a class="active" href="{{ url_for('buscador') }}">BUSCADOR</a></li>
+        </ul>
+    </nav>
+  </header>
+  <main>
+  <section id="sect-table">
+    <h1 id="name-song">{{ nombre }}:</h1>
+    <table id="table-song">
+      <tr>
+        <td id="song-invar">Artista:</td>
+        <td id="song-var">{{ artista }}</td>
+      </tr>
+      <td id="song-invar">Album:</td>
+      <td id="song-var">{{ album }}</td>
+      </tr>
+      <tr>
+        <td id="song-invar">Duración:</td>
+        <td id="song-var">{{ duracion }}</td>
+      </tr>
+      <tr>
+        <td id="song-invar">Año:</td>
+        <td id="song-var">{{ anio }}</td>
+      </tr>
+      <tr>
+        <td id="song-invar">Lyrics:</td>
+        <td id="song-var"><a href="{{ url_for('imprime_lyrics') }}">Ver los lyrics</a></td>
+      </tr>
+      <tr>
+        <td id="song-invar">Video:</td>
+        <td id="song-var"> <a href={{ video }}>Ver videoclip en youtube </a></td>
+      </tr>
+    </table>
+  </section>
+  </main>
+  <footer>
+    <p>MUSIC RECOMMENDATION SYSTEM! Redescubre la música</p>
+</footer>
+</body>
+
+</html>

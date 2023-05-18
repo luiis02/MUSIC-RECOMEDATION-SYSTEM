@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Letra</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link rel="stylesheet" href="../static/styles.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fas fa-bars"></i>
+        </label>
+        <ul>
+            <li><a  href="{{ url_for('index') }}">INICIO</a></li>
+            <li><a href="#">PLAYLIST</a></li>
+            <li><a href="#">ACERCA DE</a></li>
+            <li><a class="active" href="{{ url_for('buscador') }}">BUSCADOR</a></li>
+        </ul>
+    </nav>
+  </header>
+  <main>
+  <section class="container-lyr">
+    <h1 id="lyrics-tittle"">LYRICS</h1>
+        <section class=" lyrics">
+      <div class="lyrics-box">
+        <p id="p-lyrics">{{ lyrics }}</p>
+      </div>
+  </section>
+  </main>
+  <footer>
+    <p>MUSIC RECOMMENDATION SYSTEM! Redescubre la música</p>
+  </footer>
+</body>
+
+</html>
