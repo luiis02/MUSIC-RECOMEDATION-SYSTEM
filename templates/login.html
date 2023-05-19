@@ -1,16 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <title>Iniciar sesión</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inica sesion!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="../static/styles.css">
 </head>
+
 <body>
-  <h2>Iniciar sesión</h2>
-  <form method="POST" action="/login">
-    <label for="username">Nombre de usuario:</label>
-    <input type="text" id="username" name="username" required><br><br>
-    <label for="password">Contraseña:</label>
-    <input type="password" id="password" name="password" required><br><br>
-    <input type="submit" value="Iniciar sesión">
-  </form>
+    <header>
+        <nav>
+            <input type="checkbox" id="check">
+            <label for="check" class="checkbtn">
+                <i class="fas fa-bars"></i>
+            </label>
+
+            <ul>
+                <li><a href="{{ url_for('index') }}" class="login-btn"> INICIO</a></li>
+                <li><a href="#" class="active" >INICIAR SESIÓN</a></li>
+                <li><a href="{{ url_for('register') }}" class="login-btn">REGISTRARSE</a></li>
+                <li><a href="#" class="login-btn">ACERCA DE</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Iniciar sesión</h2>
+        <form method="POST" action="/login">
+            <label for="username">Nombre de usuario:</label>
+            <input type="text" id="username" name="username" required><br><br>
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" required><br><br>
+            <input type="submit" value="Iniciar sesión">
+        </form>
+    </main>
+    <footer>
+        <p>MUSIC RECOMMENDATION SYSTEM! Redescubre la música</p>
+    </footer>
 </body>
+
 </html>

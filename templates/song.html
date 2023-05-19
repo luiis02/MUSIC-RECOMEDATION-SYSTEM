@@ -18,6 +18,7 @@
             <li><a href="#">PLAYLIST</a></li>
             <li><a href="#">ACERCA DE</a></li>
             <li><a class="active" href="{{ url_for('buscador') }}">BUSCADOR</a></li>
+            <li><a href="{{ url_for('logout') }}">CERRAR SESIÓN</a></li>
         </ul>
     </nav>
   </header>
@@ -41,13 +42,14 @@
         <td id="song-var">{{ anio }}</td>
       </tr>
       <tr>
-        <td id="song-invar">Lyrics:</td>
-        <td id="song-var"><a href="{{ url_for('imprime_lyrics') }}">Ver los lyrics</a></td>
-      </tr>
-      <tr>
         <td id="song-invar">Video:</td>
         <td id="song-var"> <a href={{ video }}>Ver videoclip en youtube </a></td>
       </tr>
+      <tr>
+        <td id="song-invar">Lyrics:</td>
+        <td id="song-var">{{ letra }}</a></td>
+      </tr>
+
     </table>
   </section>
   </main>

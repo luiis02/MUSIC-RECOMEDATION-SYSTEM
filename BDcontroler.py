@@ -1,6 +1,6 @@
 import mysql.connector
 
-class BDcontroler:
+class BDController:
     def __init__(self):
         self.host = '35.239.140.3'
         self.user = 'root'
@@ -18,9 +18,24 @@ class BDcontroler:
         )
         self.cursor = self.connection.cursor()
 
-    def execute_query(self, query):
-        self.cursor.execute(query)
+    def execute_select(self, query, params=None):
+        if params is None:
+            self.cursor.execute(query)
+        else:
+            self.cursor.execute(query, params)
         return self.cursor.fetchall()
+    
+    def execute_query(self, query, params=None):
+        try:
+            if params is None:
+                self.cursor.execute(query)
+            else:
+                self.cursor.execute(query, params)
+            self.connection.commit()
+            return self.cursor.fetchall()
+        except mysql.connector.Error as error:
+            print(f'Error al ejecutar la consulta: {error}')
+
 
     def close(self):
         if self.cursor:

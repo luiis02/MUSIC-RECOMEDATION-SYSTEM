@@ -15,6 +15,7 @@ class Song:
         self.init_anio_and_album()
         self.url=self.buscar_video_youtube()
         self.letra=self.genera_letra()
+        self.lyrics
     def get_url(self):
         return self.url
     def get_titulo(self):
@@ -32,7 +33,7 @@ class Song:
         return self.duracion
         
     def get_lyrics(self):
-        return self.letra
+        return self.lyrics
     
     def fetch_youtube_video(self):
         return self.buscar_video_youtube()
@@ -74,29 +75,23 @@ class Song:
 
         
     def genera_letra(self):
-        ubi="none_ubi"
-        composicion=self.titulo+" "+self.artista
-        composicion = composicion.replace("_", " ")
-        
-        DEVELOPER_KEY = 'AIzaSyBiClX6N8cRESLv02xRtnpNLgG2bI1TEKM'
-        CX = 'c5795771047404109'
-        service = build('customsearch', 'v1', developerKey=DEVELOPER_KEY)
-        result = service.cse().list(q='letras.com '+ composicion, cx=CX).execute()
-        
-        url2=result['items'][0]['link']
-        print(url2)
-        
-        response = requests.get(url2)
+        frase = "https://genius.com/" + self.artista.replace(" ", "-") + "-" + self.titulo.replace(" ", "-") + "-lyrics"
+        response = requests.get(frase)
         html = response.content
-        # Crear un objeto BeautifulSoup con el HTML obtenido
+
         soup = BeautifulSoup(html, 'html.parser')
-        parrafos=""
-        lyrics=""
-        parrafos = soup.find('div', class_='cnt-letra').find_all('p')
-        for p in parrafos:
-            lyrics=lyrics+p.text+"\n"
-        texto_separado = re.sub(r"([a-z])([A-Z])", r"\1\n\2", lyrics)
-        return texto_separado    
+
+        div_lyrics_list = soup.find_all('div', class_='Lyrics__Container-sc-1ynbvzw-5 Dzxov')
+        self.lyrics = ""  
+        if div_lyrics_list:
+            for div_lyrics in div_lyrics_list:
+                texto_separado = re.sub(r"([a-z])([A-Z])", r"\1\n\2", div_lyrics.text)
+                texto_separado = re.sub(r"(\[|\])", r" \1", texto_separado)
+                self.lyrics += texto_separado
+        else: 
+            self.lyrics="No se han localizado los lyrics de está canción :("
+        return self.lyrics
+
 
 
 
