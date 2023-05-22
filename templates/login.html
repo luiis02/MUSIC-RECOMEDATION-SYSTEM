@@ -17,18 +17,19 @@
             <label for="check" class="checkbtn">
                 <i class="fas fa-bars"></i>
             </label>
-
             <ul>
                 <li><a href="{{ url_for('index') }}" class="login-btn"> INICIO</a></li>
                 <li><a href="#" class="active" >INICIAR SESIÓN</a></li>
                 <li><a href="{{ url_for('register') }}" class="login-btn">REGISTRARSE</a></li>
-                <li><a href="#" class="login-btn">ACERCA DE</a></li>
+                <li><a href="{{ url_for('acerca') }}" class="login-btn">ACERCA DE</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <h2>Iniciar sesión</h2>
-        <form method="POST" action="/login">
+        
+        <form method="POST" action="/login" id="reg-user">
+            <h2>Iniciar sesión</h2>
+            <p id="warnings">{{ warnings }}</p>
             <label for="username">Nombre de usuario:</label>
             <input type="text" id="username" name="username" required><br><br>
             <label for="password">Contraseña:</label>

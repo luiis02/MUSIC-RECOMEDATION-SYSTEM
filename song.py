@@ -85,14 +85,14 @@ class Song:
         self.lyrics = ""  
         if div_lyrics_list:
             for div_lyrics in div_lyrics_list:
-                texto_separado = re.sub(r"([a-z])([A-Z])", r"\1\n\2", div_lyrics.text)
+                div_lyrics_text = div_lyrics.text.encode('utf-8').decode('utf-8')
+                texto_separado = re.sub(r"([a-z])([A-Z])", r"\1\n\2", div_lyrics_text, flags=re.UNICODE)
+                texto_separado = re.sub(r"([\])])", r"\1\n", texto_separado)
                 texto_separado = re.sub(r"(\[|\])", r" \1", texto_separado)
+                texto_separado = re.sub(r"([)])", r"\1\n", texto_separado)
+                texto_separado = re.sub(r"([(])", r"\1\n", texto_separado)
+                texto_separado = re.sub(r"(')", r"\1\n", texto_separado)
                 self.lyrics += texto_separado
         else: 
             self.lyrics="No se han localizado los lyrics de está canción :("
         return self.lyrics
-
-
-
-
-

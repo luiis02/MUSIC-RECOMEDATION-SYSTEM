@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIENVENIDO!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <input type="checkbox" id="check">
+            <label for="check" class="checkbtn">
+                <i class="fas fa-bars"></i>
+            </label>
+            {% if current_user.is_authenticated %}
+            <ul>
+                <li><a href="{{ url_for('playlist') }}">PLAYLIST</a></li>
+                <li><a href="{{ url_for('buscador') }}">BUSCADOR</a></li>
+                <li><a class="active" href="#">ACERCA DE</a></li>
+                <li><a href="{{ url_for('logout') }}">CERRAR SESIÓN</a></li>
+            </ul>
+            {% else %}
+            <ul>
+                <li><a href="{{ url_for('index') }}">INICIO</a></li>
+                <li><a href="{{ url_for('login') }}" class="login-btn">INICIAR SESIÓN</a></li>
+                <li><a href="{{ url_for('register') }}" class="login-btn">REGISTRARSE</a></li>
+                <li><a class="active" href="#">ACERCA DE</a></li>
+            </ul>
+            {% endif %}
+            
+        </nav>
+    </header>
+    <main>
+        <section>
+        <h2 id="tittle-index">ACERCA DE TU RECOMENDADOR DE MUSICA FAVORITA</h2>
+        <p>Music Recommender System es una innovadora plataforma en línea que brinda a los usuarios la capacidad de crear playlists personalizadas y obtener datos detallados sobre sus canciones favoritas. Esta plataforma ha sido diseñada para ofrecer una experiencia musical única y adaptada a los gustos y preferencias individuales de cada usuario.
+
+            Características principales:
+            
+            Creación de Playlists Personalizadas: Music Recommender System permite a los usuarios crear playlists personalizadas según sus preferencias musicales. Los usuarios pueden explorar una amplia biblioteca de canciones y agregar sus favoritas a sus playlists, organizarlas en base a géneros, artistas o estados de ánimo específicos.
+            
+            Recomendaciones Musicales Inteligentes: La plataforma utiliza algoritmos avanzados de recomendación de música para ofrecer a los usuarios nuevas canciones y artistas que se ajusten a sus gustos. Estas recomendaciones se generan en función del historial de escucha, las interacciones anteriores del usuario y los patrones de reproducción.
+            
+            Obtención de Datos Detallados: Music Recommender System proporciona a los usuarios información detallada sobre sus canciones favoritas. Los usuarios pueden acceder a datos como el nombre del artista, el álbum, el año de lanzamiento, la duración y las letras de las canciones. Además, también pueden obtener información adicional, como las calificaciones y reseñas de otros usuarios.
+            
+            Exploración de Géneros Musicales: La plataforma ofrece una amplia variedad de géneros musicales para que los usuarios exploren. Desde pop y rock hasta hip-hop y música clásica, los usuarios pueden descubrir nuevos estilos y ampliar sus horizontes musicales.
+            
+            Playlist Generadas por IA: Music Recommender System utiliza inteligencia artificial para generar playlists automáticas y personalizadas en función de los gustos musicales de los usuarios. Estas playlists se actualizan continuamente a medida que el sistema aprende más sobre las preferencias del usuario.
+            
+            Interacción Social: La plataforma fomenta la interacción social entre los usuarios. Los usuarios pueden compartir sus playlists con amigos, seguir las playlists de otros usuarios y descubrir música recomendada por amigos o personas con gustos similares.
+            
+            En resumen, Music Recommender System ofrece una experiencia musical enriquecedora al permitir a los usuarios crear playlists personalizadas, obtener datos detallados sobre canciones y artistas, y disfrutar de recomendaciones musicales inteligentes basadas en sus gustos individuales. La plataforma está diseñada para adaptarse y evolucionar con los gustos musicales cambiantes de los usuarios, brindando una experiencia musical única y satisfactoria.
+        </p>
+        </section>
+    </main>
+    <footer>
+        <p>MUSIC RECOMMENDATION SYSTEM! Redescubre la música</p>
+    </footer>
+</body>
+
+</html>
