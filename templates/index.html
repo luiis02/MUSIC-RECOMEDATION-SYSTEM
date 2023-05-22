@@ -8,6 +8,11 @@
     <title>BIENVENIDO!</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="../static/styles.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -27,23 +32,56 @@
     </header>
     <main>
         <section id="intro">
-        <h1 id="tittle-index">BIENVENIDO A TU RECOMENDADOR DE MUSICA FAVORITA</h1>
-        <p>¡Descubre nuevas canciones y artistas basados en tus preferencias musicales!</p>
-        <p>Vaya! Parece que aun no tienes la sesion inicida, ni te has registrado...</p>
+            <h1 id="tittle-index">BIENVENIDO A TU RECOMENDADOR DE MUSICA FAVORITA</h1>
+            <h3>Algunas de las caracteristicas que ofrecemos son...</h3>
         </section>
-        <section id="ventajas">
-        <h1>Algunas de las caracteristicas que ofrecemos</h1>
-        <ul>
-            <li>Recomendaciones personalizadas en base a tus gustos</li>
-            <li>Integracion con lista de exitos de spotify</li>
-            <li>Creación y gestiona tus listas de reproducción</li>
-            <li>Lyrics de mas de 900 millones de canciones</li>
-            <li>Redireccionamiento directo a las canciones</li>
-        </ul>
-        </section>
-        <section id="reg-init">
-
-        </section>
+        <div class="container">
+            <div id="theCarousel" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#theCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#theCarousel" data-slide-to="1"></li>
+                    <li data-target="#theCarousel" data-slide-to="2"></li>
+                    <li data-target="#theCarousel" data-slide-to="3"></li>
+                </ol>
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <img src="{{ url_for('static', filename='img2.jpg') }}">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h3>Recomendaciones</h3>
+                            <p>Personalizadas en base a tus gustos</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="{{ url_for('static', filename='img1.jpg') }}">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h3>Desde Spotify</h3>
+                            <p>Integracion con lista de exitos de spotify</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="{{ url_for('static', filename='img3.jpg') }}">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h3>Lyrics de canciones</h3>
+                            <p>En concreto de mas de 900 millones de canciones</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="{{ url_for('static', filename='img4.jpg') }}">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h3>Ve directo</h3>
+                            <p>Redireccionamiento directo a las canciones. Sin publicidad</p>
+                        </div>
+                    </div>
+                    <a class="left carousel-control" href="#theCarousel" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">anterior</span>
+                    </a>
+                    <a class="right carousel-control" href="#theCarousel" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">siguiente</span>
+                    </a>
+                </div>
+            </div>
     </main>
     <footer>
         <p>MUSIC RECOMMENDATION SYSTEM! Redescubre la música</p>
