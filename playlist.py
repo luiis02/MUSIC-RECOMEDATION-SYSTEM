@@ -39,39 +39,85 @@ class Playlist:
         cancion['artist'] = artist
         self.canciones.append(cancion)
 
-    def busca_estilo(parametro,n_canciones,explicit):
-        canciones = set()
-        url = "https://spotify23.p.rapidapi.com/search/"
-        querystring = {"q":parametro,"type":"playlist","offset":"0","limit":"10","numberOfTopResults":"5"}
+    #estilo es lo mismo que artista, es decir el usuario puede filtrar por estilos de musica o por cantantes
+    def inicia_con_anios(estilo,n_canciones,anio_init,anio_fin):
+        promt= str(n_canciones) + " canciones de " + str(estilo) + " y simulares desde " + str(anio_init) + " hasta " + str(anio_fin) + ". Cada una con el siguiente formato: {(Nombre de canción),(nombre de artista)}"
+        payload = { "messages": [
+            {
+                "role": "user",
+                "content": promt
+            }
+        ] }
         headers = {
-            "X-RapidAPI-Key": "0b03f3647emsh6ed656bfbda0b7bp1f2920jsn8f3dd2c3f62c",
-            "X-RapidAPI-Host": "spotify23.p.rapidapi.com"
+            "content-type": "application/json",
+            "X-RapidAPI-Key": "fc3acc3b2amsh1281989174d218ep1307c6jsn7710d10a09d3",
+            "X-RapidAPI-Host": "chatgpt53.p.rapidapi.com"
         }
-        response = requests.get(url, headers=headers, params=querystring)
-        data = response.json()
-        playlists = data['playlists']['items'][:5]
-        random.shuffle(playlists)
+        response = requests.post(url, json=payload, headers=headers)
+        data=response.json()
+        songs_int=data['choices'][0]['message']['content']
+        songs_int=str(songs_int)
+        filas = songs_int.splitlines()
+        vector=[]
+        for fila in filas:
+            fila=str(fila)
+            if("," in fila):
+                partes = fila.split(", ")
+            elif("-" in fila):
+                partes = fila.split("- ")
 
-        for playlist in playlists:
-            url = "https://spotify23.p.rapidapi.com/playlist_tracks/"
-            playlist_id = playlist['data']['uri'].split(":")[-1]
-            querystring = {"id":playlist_id,"offset":"0","limit":"100"}
-            response = requests.get(url, headers=headers, params=querystring)
-            data = response.json()
-            tracks = data['items']
-            random.shuffle(tracks)  
-            for track in tracks:
-                if len(canciones) >= n_canciones:
-                    break 
-                song = track['track']
-                if not explicit and song['explicit']:
-                    continue
-                cancion = {}
-                cancion['uri'] = song['id']
-                cancion['name'] = song['name']
-                if 'artists' in song and len(song['artists']) > 0:
-                    cancion['artist'] = song['artists'][0]['name']
-                else:
-                    cancion['artist'] = 'Unknown'
-                canciones.add(tuple(cancion.items()))
-        return canciones
+            parte1 = partes[0]
+            parte2 = partes[1]
+            posicion = 0
+            posiciones_comillas = []
+            while True:
+                posicion = parte1.find('"', posicion)
+                if posicion == -1:
+                    break
+                posiciones_comillas.append(posicion)
+                posicion += 1
+            parte1=parte1[(posiciones_comillas[0]+1):posiciones_comillas[1]]
+            vector.append([parte1,parte2])
+    
+    
+    #estilo es lo mismo que artista, es decir el usuario puede filtrar por estilos de musica o por cantantes
+    def inicia_sin_anios(estilo,n_canciones):
+        url = "https://chatgpt53.p.rapidapi.com/"
+        promt= str(n_canciones) + " canciones de " + str(estilo) + " y simulares. Cada una con el siguiente formato: {(Nombre de canción),(nombre de artista)}"
+        payload = { "messages": [
+            {
+                "role": "user",
+                "content": promt
+            }
+        ] }
+        headers = {
+            "content-type": "application/json",
+            "X-RapidAPI-Key": "fc3acc3b2amsh1281989174d218ep1307c6jsn7710d10a09d3",
+            "X-RapidAPI-Host": "chatgpt53.p.rapidapi.com"
+        }
+        response = requests.post(url, json=payload, headers=headers)
+        data=response.json()
+        songs_int=data['choices'][0]['message']['content']
+        songs_int=str(songs_int)
+        filas = songs_int.splitlines()
+        vector=[]
+        for fila in filas:
+            fila=str(fila)
+            if("," in fila):
+                partes = fila.split(", ")
+            elif("-" in fila):
+                partes = fila.split("- ")
+                
+            parte1 = partes[0]
+            parte2 = partes[1]
+            posicion = 0
+            posiciones_comillas = []
+            while True:
+                posicion = parte1.find('"', posicion)
+                if posicion == -1:
+                    break
+                posiciones_comillas.append(posicion)
+                posicion += 1
+            parte1=parte1[(posiciones_comillas[0]+1):posiciones_comillas[1]]
+            vector.append([parte1,parte2])
+    
