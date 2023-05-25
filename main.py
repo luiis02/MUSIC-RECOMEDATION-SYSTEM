@@ -1,7 +1,7 @@
 import re
 import os
 from flask import Flask, render_template, redirect, url_for, request
-from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from song import Song
 from BDcontroler import BDController
 from user import User
@@ -14,22 +14,25 @@ from bs4 import BeautifulSoup
 #######################################################################################################
 #######################################################################################################
 
+# Iniciando la aplicación Flask y el manejador de sesión
 app = Flask(__name__)
 app.secret_key = 'ClaveSupperSegura'
 login_manager = LoginManager()
 login_manager.init_app(app)
 letra =""
 
+# Cargando usuario
 @login_manager.user_loader
 def load_user(user_id):
     return User(user_id)
 
+# Rutas
 @app.route('/logout')
 def logout():
     logout_user()
     # Redirecciona a la página de inicio de sesión u otra página de tu elección
     return redirect(url_for('index'))
-    
+
 @app.route("/")
 def index2():
     name = os.environ.get("NAME", "World")
@@ -145,6 +148,73 @@ def buscador():
         artista = request.form['artista'].replace(' ', '_')
         return redirect(url_for('cancion', titulo=titulo, artista=artista))
     return render_template('buscador.html')
+
+@app.route('/playlist')
+@login_required
+def playlist():
+    connection = mysql.connector.connect(
+        host='35.239.140.3',
+        user='root',
+        password='root',
+        database='music-system'
+    )
+    cursor = connection.cursor()
+    query = "SELECT * FROM PLAYLIST"
+    cursor.execute(query)
+    #playlists_data = cursor.fetchall()
+
+    # Aquí convertimos los datos obtenidos de la base de datos en una lista de diccionarios
+    # Suponiendo que tus playlists tienen 'id', 'name' y 'description'
+    #playlists = [{'id': playlist[0], 'name': playlist[1], 'description': playlist[2]} for playlist in playlists_data]
+    
+    return render_template('playlist.html') #, playlists=playlists)
+
+
+@app.route('/add_playlist', methods=['GET', 'POST'])
+def add_playlist():
+    if request.method == 'POST':
+        name = request.form['name']
+        description = request.form['description']
+
+        connection = mysql.connector.connect(
+            host='35.239.140.3',
+            user='root',
+            password='root',
+            database='music-system'
+        )
+        cursor = connection.cursor()
+        username = current_user.username
+        query = "INSERT INTO PLAYLIST (NAMEPLAYLIST, USERNAME, DESCRIPCION) VALUES (%s, %s ,%s)"
+        cursor.execute(query, (name, username, description))
+        connection.commit()
+
+        return redirect(url_for('playlist.html'))
+
+    return render_template('add_playlist.html')
+
+@app.route('/playlist_detail/<int:id>', methods=['GET'])
+def playlist_detail(id):
+    connection = mysql.connector.connect(
+        host='35.239.140.3',
+        user='root',
+        password='root',
+        database='music-system'
+    )
+    cursor = connection.cursor()
+    query = "SELECT * FROM PLAYLIST WHERE id=%s"
+    cursor.execute(query, (id,))
+    playlist = cursor.fetchone()
+    query = "SELECT * FROM SONGATPLAYLIST WHERE playlist_id=%s"
+    cursor.execute(query, (id,))
+    songs = cursor.fetchall()
+    playlist = {
+        'name': playlist[1],
+        'description': playlist[2],
+        'songs': [{'title': song[1], 'artist': song[2]} for song in songs]
+    }
+    return render_template('playlist_detail.html', playlist=playlist)
+
+
 
 @app.route("/secret")
 @login_required

@@ -1,11 +1,13 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Letra</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link rel="stylesheet" href="../static/styles.css">
 </head>
 
 <body>
@@ -24,49 +26,14 @@
         </nav>
     </header>
     <main>
-        <section class="info-playlist">
-            <h1 id="lyrics-tittle"">{{NOMBRE}}</h1>
-            <p id=" playlist-user">{{OWNER}}</p>
-                <p id="playlist-desc">{{DESC}}</p>
-                <p id="playlist-moreinfo">Esta playlisto contiene actualmente {{numero}} canciones</p>
-        </section>
-        <section class="aniade-song">
-            <table id="table-playlistsong">
-                <tr>
-                    <form action="">
-                        <td>
-                            <label for="titulo">Título de la canción:</label><br>
-                        </td>
-                        <td>
-                            <input type="text" id="titulo" name="titulo" required><br>
-                        </td>
-                        <td>
-                            <label for="artista">Artista de la canción:</label><br>
-                        </td>
-                        <td>
-                            <input type="text" id="artista" name="artista" required><br><br>
-                        </td>
-                        <td>
-                            <input type="submit" value="Añadir">
-                        </td>
-                    </form>
-                </tr>
-            </table>
-        </section>
-        <section>
-            <ul>
-                <li>
-                    <table id="table-playlistsong">
-                        <tr>
-                            <td>{{NAME}}</td>
-                            <td>{{ARTIST}}</td>
-                            <td>{{URI}}</td>
-                            <td><button> ELIMINAR</button></td>
-                        </tr>
-                    </table>
-                </li>
-            </ul>
-        </section>
+        <h2>Playlists</h2>
+        <button type="button" onclick="location.href='{{ url_for('add_playlist') }}'">Añadir Playlist</button>
+        {% for playlist in playlists %}
+            <div class="playlist-item">
+                <h3><a href="{{ url_for('playlist_detail', playlist_id=playlist.id) }}">{{ playlist.name }}</a></h3>
+                <p>{{ playlist.description }}</p>
+            </div>
+        {% endfor %}
     </main>
     <footer>
         <p>MUSIC RECOMMENDATION SYSTEM! Redescubre la música</p>

@@ -1,6 +1,7 @@
 #canciones es un SET cuidado
 class Playlist:
-    def __init__(self, nombre, descripcion, canciones, owner,estilo,numero,explicit):
+    def __init__(self, id, nombre, descripcion, canciones, owner,estilo,numero,explicit):
+        self.id = id
         self.nombre = nombre
         self.descripcion = descripcion
         self.owner = owner
