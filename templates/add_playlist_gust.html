@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Playlist</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <input type="checkbox" id="check">
+            <label for="check" class="checkbtn">
+                <i class="fas fa-bars"></i>
+            </label>
+            <ul>
+                <li><a href="{{ url_for('playlist') }}">PLAYLIST</a></li>
+                <li><a href="{{ url_for('buscador') }}">BUSCADOR</a></li>
+                <li><a href="{{ url_for('acerca') }}">ACERCA DE</a></li>
+                <li><a href="{{ url_for('logout') }}">CERRAR SESIÓN</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <form method="POST" action="/add_playlist_gust" id="add-playlist2">
+            <h2>Añadir Playlist</h2>
+            <p id="warnings">{{ warnings }}</p>
+            <label for="name">Nombre de la playlist: *</label><br>
+            <input type="text" id="name" name="name" required><br><br>
+            <label for="description">Descripción:</label><br>
+            <input type="text" id="description" name="description"><br><br>
+            <label for="song_n">Número de canciones:</label><br>
+            <input type="number" id="year" name="song_n" required><br><br>
+            <label for="name1">Gusto: *</label><br>
+            <input type="text" id="name1" name="name1" required><br><br>
+            <input type="submit" value="Añadir Playlist">
+        </form>
+        <p>Tienes alguna dudas... Aqui va una explicación muy sencilla, el campo del nombre de la playlist y escoger un gusto son campos obligatorios, los años sirven para filtrar por epocas, aunque no son obligatorios</p>
+    </main>
+</body>
+
+</html>

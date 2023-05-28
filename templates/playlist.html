@@ -37,14 +37,16 @@
             <ul class="playlist">
                 {% for row in playlists %}
                 <li>
-                    <a href="{{ url_for('playlist_details', playlist_id=row[0]) }}">{{ row[1] }}</a><!-- Name of playlist -->
+                    <a href="{{ url_for('playlist_details', playlist_name=row[1]) }}">{{ row[1] }}</a><!-- Name of playlist -->
                     <p>{{ row[3] }}</p> <!-- Description -->
                 </li>
                 <br>
                 {% endfor %}
             </ul>
 
-            <button type="button" onclick="location.href='{{ url_for('add_playlist') }}'">Añadir Playlist</button>
+            <button type="button" onclick="location.href='{{ url_for('add_playlist') }}'">Añadir Playlist Vacia</button>
+            <br>
+            <button type="button" onclick="location.href='{{ url_for('add_playlist_gust') }}'">Añadir Playlist Personalizada</button>
             
         </ul>
 

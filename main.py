@@ -1,6 +1,6 @@
 import re
 import os
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, session
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from song import Song
 from BDcontroler import BDController
@@ -9,6 +9,7 @@ import requests
 import json
 import mysql.connector
 from bs4 import BeautifulSoup
+from playlist import Playlist
 
 #######################################################################################################
 #######################################################################################################
@@ -29,6 +30,7 @@ def load_user(user_id):
 # Rutas
 @app.route('/logout')
 def logout():
+    session.pop('username', None)
     logout_user()
     # Redirecciona a la página de inicio de sesión u otra página de tu elección
     return redirect(url_for('index'))
@@ -64,6 +66,7 @@ def login():
             if result is not None and result[0] == 1:
                 user = User(username)
                 login_user(user)
+                session['username'] = username
                 connection.close()
                 return redirect(url_for('buscador'))
             else:
@@ -160,14 +163,13 @@ def playlist():
     )
     cursor = connection.cursor()
     query = "SELECT * FROM PLAYLIST WHERE USERNAME=%s"
-    cursor.execute(query, ('jaime',))
+    cursor.execute(query, (session['username'],))
     playlists_data = cursor.fetchall()
 
     for playlist in playlists_data:
         print(playlist)
         
-        
-    return render_template('playlist.html', username='jaime', playlists=playlists_data)
+    return render_template('playlist.html', username=session['username'], playlists=playlists_data)
 
 
 @app.route('/add_playlist', methods=['GET', 'POST'])
@@ -183,13 +185,54 @@ def add_playlist():
             database='music-system'
         )
         cursor = connection.cursor()
-        username = 'jaime'
+        username = session['username']
         query = "INSERT INTO PLAYLIST (NAMEPLAYLIST, USERNAME, DESCRIPCION) VALUES (%s, %s ,%s)"
         cursor.execute(query, (name, username, description))
         connection.commit()
         return redirect(url_for('playlist'))
 
     return render_template('add_playlist.html')
+
+@app.route('/add_playlist_gust', methods=['GET', 'POST'])
+def add_playlist_gust():
+    if request.method == 'POST':
+        name = request.form['name']
+        description = request.form['description']
+        song_n = request.form['song_n']
+        gusto = request.form['name1']
+        connection = mysql.connector.connect(
+            host='35.239.140.3',
+            user='root',
+            password='root',
+            database='music-system'
+        )
+        if (int(song_n)>10 or int(song_n)<1):
+                return render_template('add_playlist_gust.html', warnings='Introduce un número de canciones válido')
+
+        cursor = connection.cursor()
+        query = "SELECT COUNT(*) FROM PLAYLIST WHERE USERNAME = %s AND NAMEPLAYLIST = %s"
+        cursor.execute(query, (session['username'], name))
+        result = cursor.fetchone()
+
+        if result is not None and result[0] > 0:
+            return render_template('add_playlist_gust.html', warnings='Introduce un nombre de playlist nuevo.')
+
+        query = "INSERT INTO PLAYLIST (NAMEPLAYLIST, USERNAME, DESCRIPCION) VALUES (%s, %s ,%s)"
+        cursor.execute(query, (name, session['username'], description))
+        connection.commit()
+        playlist = Playlist("", "")
+        conjunto = playlist.inicia_sin_anios(gusto, song_n)
+        for cancion in conjunto:
+            nombre = cancion['nombre']
+            artista = cancion['artista']
+            query = "INSERT INTO SONGATPLAYLIST (NOMBRE, ARTISTA, NAMEPLAYLIST,USERNAME,EXPLICITSONG) VALUES (%s, %s , %s, %s, 0)"
+            cursor.execute(query, (nombre,artista,name, session['username']))
+            connection.commit()
+            print(f'Nombre: {nombre}, Artista: {artista}')
+
+        return redirect(url_for('playlist'))
+
+    return render_template('add_playlist_gust.html', warnings="")
 
 """@app.route('/playlist_detail/<int:id>', methods=['GET'])
 def playlist_detail(id):
@@ -214,9 +257,9 @@ def playlist_detail(id):
     return render_template('playlist_detail.html', playlist=playlist)"""
 
 
-@app.route('/playlist/<playlist_id>')
+@app.route('/playlist/<playlist_name>')
 @login_required
-def playlist_details(playlist_id):
+def playlist_details(playlist_name):
     # Obtiene las canciones en la playlist seleccionada.
     connection = mysql.connector.connect(
         host='35.239.140.3',
@@ -225,35 +268,12 @@ def playlist_details(playlist_id):
         database='music-system'
     )
     cursor = connection.cursor()
-    query = "SELECT * FROM SONGATPLAYLIST WHERE PLAYLISTID=%s AND USERNAME=%s"
-    cursor.execute(query, (playlist_id, 'jaime'))
+    query = "SELECT * FROM SONGATPLAYLIST WHERE NAMEPLAYLIST=%s AND USERNAME=%s"
+    cursor.execute(query, (playlist_name, session['username']))
     songs_data = cursor.fetchall()
-    
     for song in songs_data:
         print(song)
-
     return render_template('playlist_detail.html', canciones=songs_data)
-
-
-
-
-@app.route("/secret")
-@login_required
-def muestra():
-    db = BDcontroler()
-    db.connect()
-    # Ejecutar una consulta
-    results = db.execute_query("SHOW TABLES")
-    # Almacenar los resultados en una lista
-    rows = []
-    for row in results:
-        rows.append(row)
-
-    # Cerrar la conexión
-    db.close()
-
-    # Retornar la lista completa de resultados
-    return rows
 
 @app.route("/acerca")
 def acerca():
@@ -276,7 +296,11 @@ def page_not_found(error):
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('errorcode.html',code="404", desc="Pagina no encontrada - mejor volver"), 404
-        
+
+@app.errorhandler(500)
+def page_not_found(error):
+    return render_template('errorcode.html',code="500", desc="Ocurrio un error - mejor volver"), 500
+
 if __name__ == "__main__":
     app.run(debug=False, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
     
