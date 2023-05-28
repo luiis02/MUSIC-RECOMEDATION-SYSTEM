@@ -159,15 +159,15 @@ def playlist():
         database='music-system'
     )
     cursor = connection.cursor()
-    query = "SELECT * FROM PLAYLIST"
-    cursor.execute(query)
-    #playlists_data = cursor.fetchall()
+    query = "SELECT * FROM PLAYLIST WHERE USERNAME=%s"
+    cursor.execute(query, ('jaime',))
+    playlists_data = cursor.fetchall()
 
-    # Aquí convertimos los datos obtenidos de la base de datos en una lista de diccionarios
-    # Suponiendo que tus playlists tienen 'id', 'name' y 'description'
-    #playlists = [{'id': playlist[0], 'name': playlist[1], 'description': playlist[2]} for playlist in playlists_data]
-    
-    return render_template('playlist.html') #, playlists=playlists)
+    for playlist in playlists_data:
+        print(playlist)
+        
+        
+    return render_template('playlist.html', username='jaime', playlists=playlists_data)
 
 
 @app.route('/add_playlist', methods=['GET', 'POST'])
@@ -183,16 +183,15 @@ def add_playlist():
             database='music-system'
         )
         cursor = connection.cursor()
-        username = current_user.username
+        username = 'jaime'
         query = "INSERT INTO PLAYLIST (NAMEPLAYLIST, USERNAME, DESCRIPCION) VALUES (%s, %s ,%s)"
         cursor.execute(query, (name, username, description))
         connection.commit()
-
-        return redirect(url_for('playlist.html'))
+        return redirect(url_for('playlist'))
 
     return render_template('add_playlist.html')
 
-@app.route('/playlist_detail/<int:id>', methods=['GET'])
+"""@app.route('/playlist_detail/<int:id>', methods=['GET'])
 def playlist_detail(id):
     connection = mysql.connector.connect(
         host='35.239.140.3',
@@ -212,7 +211,29 @@ def playlist_detail(id):
         'description': playlist[2],
         'songs': [{'title': song[1], 'artist': song[2]} for song in songs]
     }
-    return render_template('playlist_detail.html', playlist=playlist)
+    return render_template('playlist_detail.html', playlist=playlist)"""
+
+
+@app.route('/playlist/<playlist_id>')
+@login_required
+def playlist_details(playlist_id):
+    # Obtiene las canciones en la playlist seleccionada.
+    connection = mysql.connector.connect(
+        host='35.239.140.3',
+        user='root',
+        password='root',
+        database='music-system'
+    )
+    cursor = connection.cursor()
+    query = "SELECT * FROM SONGATPLAYLIST WHERE PLAYLISTID=%s AND USERNAME=%s"
+    cursor.execute(query, (playlist_id, 'jaime'))
+    songs_data = cursor.fetchall()
+    
+    for song in songs_data:
+        print(song)
+
+    return render_template('playlist_detail.html', canciones=songs_data)
+
 
 
 

@@ -3,23 +3,46 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Añadir Playlist</title>
+    <title>Playlist Details</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
 <body>
+    <header>
+        <nav>
+            <input type="checkbox" id="check">
+            <label for="check" class="checkbtn">
+                <i class="fas fa-bars"></i>
+            </label>
+            <ul>
+                <li><a href="{{ url_for('playlist') }}">PLAYLIST</a></li>
+                <li><a href="{{ url_for('buscador') }}">BUSCADOR</a></li>
+                <li><a href="{{ url_for('acerca') }}">ACERCA DE</a></li>
+                <li><a href="{{ url_for('logout') }}">CERRAR SESIÓN</a></li>
+            </ul>
+        </nav>
+    </header>
     <main>
-        <form method="POST" action="/add_playlist" id="add-playlist">
-            <h2>Añadir Playlist</h2>
-            <label for="name">Nombre de la playlist:</label>
-            <input type="text" id="name" name="name" required><br><br>
-            <label for="description">Descripción:</label>
-            <input type="text" id="description" name="description" required><br><br>
-            <input type="submit" value="Añadir Playlist">
-        </form>
+        <h1>Canciones de la Playlist</h1>
+        <br>
+
+        <ul>
+            {% for cancion in canciones %}
+            <li>
+                <a href="{{ url_for('cancion', titulo=cancion[0].replace(' ', '_'), artista=cancion[1].replace(' ', '_')) }}">
+                    {{ cancion[1] }} - {{ cancion[0] }}
+                </a>
+            </li>
+            <br>
+            {% endfor %}
+        </ul>
+
+
+
     </main>
+    <footer>
+        <p>MUSIC RECOMMENDATION SYSTEM! Redescubre la música</p>
+    </footer>
 </body>
 
 </html>

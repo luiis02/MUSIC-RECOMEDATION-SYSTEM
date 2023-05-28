@@ -8,7 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Playlist</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="../static/styles.css">
 </head>
+
 
 <body>
     <header>
@@ -25,19 +27,33 @@
             </ul>
         </nav>
     </header>
+
     <main>
-        <h2>Playlists</h2>
-        <button type="button" onclick="location.href='{{ url_for('add_playlist') }}'">Añadir Playlist</button>
-        {% for playlist in playlists %}
-            <div class="playlist-item">
-                <h3><a href="{{ url_for('playlist_detail', playlist_id=playlist.id) }}">{{ playlist.name }}</a></h3>
-                <p>{{ playlist.description }}</p>
-            </div>
-        {% endfor %}
+
+        <h2>Playlists de {{ username }}</h2>
+        <br>
+        <ul>
+
+            <ul class="playlist">
+                {% for row in playlists %}
+                <li>
+                    <a href="{{ url_for('playlist_details', playlist_id=row[0]) }}">{{ row[1] }}</a><!-- Name of playlist -->
+                    <p>{{ row[3] }}</p> <!-- Description -->
+                </li>
+                <br>
+                {% endfor %}
+            </ul>
+
+            <button type="button" onclick="location.href='{{ url_for('add_playlist') }}'">Añadir Playlist</button>
+            
+        </ul>
+
     </main>
+
     <footer>
         <p>MUSIC RECOMMENDATION SYSTEM! Redescubre la música</p>
     </footer>
 </body>
 
 </html>
+

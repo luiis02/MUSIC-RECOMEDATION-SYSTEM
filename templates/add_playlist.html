@@ -10,6 +10,20 @@
 </head>
 
 <body>
+    <header>
+        <nav>
+            <input type="checkbox" id="check">
+            <label for="check" class="checkbtn">
+                <i class="fas fa-bars"></i>
+            </label>
+            <ul>
+                <li><a href="{{ url_for('playlist') }}">PLAYLIST</a></li>
+                <li><a href="{{ url_for('buscador') }}">BUSCADOR</a></li>
+                <li><a href="{{ url_for('acerca') }}">ACERCA DE</a></li>
+                <li><a href="{{ url_for('logout') }}">CERRAR SESIÓN</a></li>
+            </ul>
+        </nav>
+    </header>
     <main>
         <form method="POST" action="/add_playlist" id="add-playlist">
             <h2>Añadir Playlist</h2>
