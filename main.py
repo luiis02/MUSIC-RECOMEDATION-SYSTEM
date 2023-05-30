@@ -37,7 +37,6 @@ def logout():
 
 @app.route("/")
 def index2():
-    name = os.environ.get("NAME", "World")
     return redirect(url_for("index"))
 
 @app.route("/index")
@@ -177,85 +176,41 @@ def add_playlist():
     if request.method == 'POST':
         name = request.form['name']
         description = request.form['description']
-
-        connection = mysql.connector.connect(
-            host='35.239.140.3',
-            user='root',
-            password='root',
-            database='music-system'
-        )
-        cursor = connection.cursor()
-        username = session['username']
-        query = "INSERT INTO PLAYLIST (NAMEPLAYLIST, USERNAME, DESCRIPCION) VALUES (%s, %s ,%s)"
-        cursor.execute(query, (name, username, description))
-        connection.commit()
+        playlist = Playlist(session['username'],name) 
+        playlist.add_playlist(description)
         return redirect(url_for('playlist'))
 
     return render_template('add_playlist.html')
 
 @app.route('/add_playlist_gust', methods=['GET', 'POST'])
 def add_playlist_gust():
-    if request.method == 'POST':
-        name = request.form['name']
-        description = request.form['description']
-        song_n = request.form['song_n']
-        gusto = request.form['name1']
-        connection = mysql.connector.connect(
-            host='35.239.140.3',
-            user='root',
-            password='root',
-            database='music-system'
-        )
-        if (int(song_n)>10 or int(song_n)<1):
-                return render_template('add_playlist_gust.html', warnings='Introduce un número de canciones válido')
+    try:
+        if request.method == 'POST':
+            name = request.form['name']
+            description = request.form['description']
+            song_n = request.form['song_n']
+            gusto = request.form['name1']
+           
+            if (int(song_n)>10 or int(song_n)<1):
+                    return render_template('add_playlist_gust.html', warnings='Introduce un número de canciones válido')
+            
+            bd = BDController()
+            bd.connect()
 
-        cursor = connection.cursor()
-        query = "SELECT COUNT(*) FROM PLAYLIST WHERE USERNAME = %s AND NAMEPLAYLIST = %s"
-        cursor.execute(query, (session['username'], name))
-        result = cursor.fetchone()
+            playlist = Playlist(session['username'],name) 
+            playlist.add_playlist(description)
+            conjunto = playlist.inicia_sin_anios(gusto, song_n)
+            print('entro')
+            for cancion in conjunto:
+                nombre = cancion['nombre']
+                artista = cancion['artista']
+                playlist.add_song(nombre,artista)
+                print(f'Nombre: {nombre}, Artista: {artista}')
 
-        if result is not None and result[0] > 0:
-            return render_template('add_playlist_gust.html', warnings='Introduce un nombre de playlist nuevo.')
-
-        query = "INSERT INTO PLAYLIST (NAMEPLAYLIST, USERNAME, DESCRIPCION) VALUES (%s, %s ,%s)"
-        cursor.execute(query, (name, session['username'], description))
-        connection.commit()
-        playlist = Playlist("", "")
-        conjunto = playlist.inicia_sin_anios(gusto, song_n)
-        for cancion in conjunto:
-            nombre = cancion['nombre']
-            artista = cancion['artista']
-            query = "INSERT INTO SONGATPLAYLIST (NOMBRE, ARTISTA, NAMEPLAYLIST,USERNAME,EXPLICITSONG) VALUES (%s, %s , %s, %s, 0)"
-            cursor.execute(query, (nombre,artista,name, session['username']))
-            connection.commit()
-            print(f'Nombre: {nombre}, Artista: {artista}')
-
+            return redirect(url_for('playlist'))
+    except Exception as e:
         return redirect(url_for('playlist'))
-
     return render_template('add_playlist_gust.html', warnings="")
-
-"""@app.route('/playlist_detail/<int:id>', methods=['GET'])
-def playlist_detail(id):
-    connection = mysql.connector.connect(
-        host='35.239.140.3',
-        user='root',
-        password='root',
-        database='music-system'
-    )
-    cursor = connection.cursor()
-    query = "SELECT * FROM PLAYLIST WHERE id=%s"
-    cursor.execute(query, (id,))
-    playlist = cursor.fetchone()
-    query = "SELECT * FROM SONGATPLAYLIST WHERE playlist_id=%s"
-    cursor.execute(query, (id,))
-    songs = cursor.fetchall()
-    playlist = {
-        'name': playlist[1],
-        'description': playlist[2],
-        'songs': [{'title': song[1], 'artist': song[2]} for song in songs]
-    }
-    return render_template('playlist_detail.html', playlist=playlist)"""
-
 
 @app.route('/playlist/<playlist_name>')
 @login_required
@@ -279,8 +234,12 @@ def playlist_details(playlist_name):
 def acerca():
     return render_template("acerca.html")
 
-
-
+@app.route('/delete_playlist/<playlist_name>')
+def delete_playlist(playlist_name):
+    name=session['username']
+    playlist = Playlist(name,playlist_name)
+    playlist.elimina_playlist()
+    return redirect(url_for('playlist'))
 ################################################################################################
 ################################################################################################
 ################################################################################################

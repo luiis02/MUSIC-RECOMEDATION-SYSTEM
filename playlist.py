@@ -1,11 +1,10 @@
 import requests
 import re
 import json
-
-#canciones es un SET cuidado
+from BDcontroler import BDController
 class Playlist:
-    def __init__(self, id, nombre):
-        self.id = id
+    def __init__(self, username, nombre):
+        self.username = username
         self.nombre = nombre
 
     def get_owner(self):
@@ -26,20 +25,6 @@ class Playlist:
     def get_canciones(self):
         return canciones
 
-    # uri puede ser nulo
-    # id tambien aunque no es recomendable
-    def add_cancion(self, uri, id, name, artist):
-        cancion = {}
-        if uri is None and len(self.canciones) > 0:
-            last_uri = self.canciones[-1]['uri']
-            cancion['uri'] = None
-        else:
-            cancion['uri'] = uri
-        cancion['id'] = id
-        cancion['name'] = name
-        cancion['artist'] = artist
-        self.canciones.append(cancion)
-   
     #estilo es lo mismo que artista, es decir el usuario puede filtrar por estilos de musica o por cantantes
     def inicia_sin_anios(self,estilo,n_canciones):
         url = "https://chatgpt53.p.rapidapi.com/"
@@ -83,9 +68,32 @@ class Playlist:
         data=response.json()
         songs_int=data['choices'][0]['message']['content']
         songs_int=str(songs_int)
+        print(songs_int)
         resultado = re.findall(r'\[.*\]', songs_int, re.DOTALL)
         contenido_corchetes = resultado[0]
         json_data = json.loads(contenido_corchetes)
         return json_data
 
-    
+    def elimina_playlist(self):
+        db = BDController()
+        db.connect()
+        query = 'SELECT nombre, artista FROM SONGATPLAYLIST WHERE username=%s AND nameplaylist=%s'
+        params = (self.username, self.nombre)
+        results = db.execute_select(query, params)
+        for result in results:
+            nombre = result['nombre']
+            artista = result['artista']
+            db.eliminaCanciones(self.nombre, self.username,nombre,artista)
+        db.eliminaPlaylist(self.nombre, self.username)
+
+    def add_playlist(self, description):
+        bd_controller = BDController()
+        bd_controller.connect()
+        bd_controller.insertaPlaylist(self.nombre, self.username, description)
+        bd_controller.close()
+        
+    def add_song(self, nombre,art):
+        bd_controller = BDController()
+        bd_controller.connect()
+        bd_controller.insertaSong(nombre,art,self.nombre, self.username)
+        bd_controller.close()
