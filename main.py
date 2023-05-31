@@ -165,8 +165,8 @@ def playlist():
     cursor.execute(query, (session['username'],))
     playlists_data = cursor.fetchall()
 
-    for playlist in playlists_data:
-        print(playlist)
+    #for playlist in playlists_data:
+        #print(playlist)
         
     return render_template('playlist.html', username=session['username'], playlists=playlists_data)
 
@@ -205,7 +205,7 @@ def add_playlist_gust():
                 nombre = cancion['nombre']
                 artista = cancion['artista']
                 playlist.add_song(nombre,artista)
-                print(f'Nombre: {nombre}, Artista: {artista}')
+                #print(f'Nombre: {nombre}, Artista: {artista}')
 
             return redirect(url_for('playlist'))
     except Exception as e:
@@ -226,9 +226,8 @@ def playlist_details(playlist_name):
     query = "SELECT * FROM SONGATPLAYLIST WHERE NAMEPLAYLIST=%s AND USERNAME=%s"
     cursor.execute(query, (playlist_name, session['username']))
     songs_data = cursor.fetchall()
-    for song in songs_data:
-        print(song)
-    return render_template('playlist_detail.html', canciones=songs_data)
+
+    return render_template('playlist_details.html', canciones=songs_data, playlist_name=playlist_name)
 
 @app.route("/acerca")
 def acerca():
@@ -240,6 +239,32 @@ def delete_playlist(playlist_name):
     playlist = Playlist(name,playlist_name)
     playlist.elimina_playlist()
     return redirect(url_for('playlist'))
+
+
+@app.route('/delete_song/<playlist_name>/<song_name>/<artist_name>')
+@login_required
+def delete_song(playlist_name, song_name, artist_name):
+    song_name = song_name.replace('_', ' ')
+    artist_name = artist_name.replace('_', ' ')
+    name = session['username']
+    playlist = Playlist(name, playlist_name)
+    playlist.elimina_cancion_de_playlist(song_name, artist_name)
+    return redirect(url_for('playlist_details', playlist_name=playlist_name))
+
+
+@app.route('/playlist/<playlist_name>/add_song', methods=['POST'])
+def add_song(playlist_name):
+    nombre = request.form.get('nombre')
+    artista = request.form.get('artista')
+    name = session['username']
+    playlist = Playlist(name, playlist_name)
+    if playlist:
+        playlist.add_song(nombre, artista)
+        return redirect(url_for('playlist_details', playlist_name=playlist_name))
+    
+    return "No se encontró la lista de reproducción", 404
+
+
 ################################################################################################
 ################################################################################################
 ################################################################################################

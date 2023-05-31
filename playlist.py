@@ -86,6 +86,14 @@ class Playlist:
             db.eliminaCanciones(self.nombre, self.username,nombre,artista)
         db.eliminaPlaylist(self.nombre, self.username)
 
+    def elimina_cancion_de_playlist(self, song_name, artist_name):
+        bd_controller = BDController()
+        bd_controller.connect()
+        query = 'DELETE FROM SONGATPLAYLIST WHERE username=%s AND nameplaylist=%s AND nombre=%s AND artista=%s'
+        params = (self.username, self.nombre, song_name, artist_name)
+        bd_controller.execute_query(query, params)
+        bd_controller.close()
+
     def add_playlist(self, description):
         bd_controller = BDController()
         bd_controller.connect()
