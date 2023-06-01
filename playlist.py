@@ -28,7 +28,7 @@ class Playlist:
     #estilo es lo mismo que artista, es decir el usuario puede filtrar por estilos de musica o por cantantes
     def inicia_sin_anios(self,estilo,n_canciones):
         url = "https://chatgpt53.p.rapidapi.com/"
-        promt = str(n_canciones) + ' canciones de ' + str(estilo) + ''' y similares con el siguiente formato: 
+        promt = 'Recomiendame exactamente' + str(n_canciones) + ' canciones de ' + str(estilo) + ''' y similares con el siguiente formato: 
             {
             "canciones": [
                 {
@@ -49,7 +49,11 @@ class Playlist:
                 },
                 {
                     "nombre": "NOMBRE DE CANCION 5",
-                    "artista": "ARTISTA 5"
+                    "artista": "ARTISTA 5"  
+                },
+                                {
+                    "nombre": "NOMBRE DE CANCION N",
+                    "artista": "ARTISTA N"
                 }
             ]
         }'''
