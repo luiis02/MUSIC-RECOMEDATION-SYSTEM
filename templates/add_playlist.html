@@ -25,15 +25,16 @@
         </nav>
     </header>
     <main>
-        <form method="POST" action="/add_playlist" id="add-playlist">
-            <h2>Añadir Playlist</h2>
-            <label for="name">Nombre de la playlist:</label>
-            <input type="text" id="name" name="name" required><br><br>
-            <label for="description">Descripción:</label>
-            <input type="text" id="description" name="description" required><br><br>
-            <input type="submit" value="Añadir Playlist">
+        <form method="POST" action="/add_playlist" id="add-playlist" class="form-container">
+            <h2 class="form-title">Añadir Playlist</h2>
+            <label for="name" class="form-label">Nombre de la playlist:</label>
+            <input type="text" id="name" name="name" required class="form-input"><br><br>
+            <label for="description" class="form-label">Descripción:</label> <br>
+            <textarea id="description" name="description" required class="form-textarea"></textarea><br><br>
+            <input type="submit" value="Añadir Playlist" class="form-submit">
         </form>
     </main>
+    
 </body>
 
 </html>

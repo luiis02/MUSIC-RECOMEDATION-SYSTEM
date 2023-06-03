@@ -24,36 +24,49 @@
     </header>
     <main>
         <h1>Canciones de la Playlist</h1>
-        <br>
-
-        <ul>
-            {% for cancion in canciones %}
-            <li>
-                <a href="{{ url_for('cancion', titulo=cancion[0].replace(' ', '_'), artista=cancion[1].replace(' ', '_')) }}">
-                    {{ cancion[1] }} - {{ cancion[0] }}
-                </a>
-                <br>
-                <a href="{{ url_for('delete_song', playlist_name=playlist_name, song_name=cancion[0].replace(' ', '_'), artist_name=cancion[1].replace(' ', '_')) }}">
-                    Eliminar Canción
-                </a>
-            </li>
-            <br>
-            {% endfor %}
-        </ul>
-
+    
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Artista</th>
+                    <th>Título</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cancion in canciones %}
+                <tr>
+                    <td>{{ cancion[1] }}</td>
+                    <td>{{ cancion[0] }}</td>
+                    <td>
+                        <a href="{{ url_for('cancion', titulo=cancion[0].replace(' ', '_'), artista=cancion[1].replace(' ', '_')) }}">Ver</a>
+                        |
+                        <a href="{{ url_for('delete_song', playlist_name=playlist_name, song_name=cancion[0].replace(' ', '_'), artist_name=cancion[1].replace(' ', '_')) }}">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    <br> <br>
         <h2>Añadir nueva canción</h2>
-        <form action="{{ url_for('add_song', playlist_name=playlist_name) }}" method="POST">
-            <label for="nombre">Nombre de la canción:</label><br>
-            <input type="text" id="nombre" name="nombre"><br>
-            <label for="artista">Nombre del artista:</label><br>
-            <input type="text" id="artista" name="artista"><br>
-            <input type="submit" value="Añadir canción">
+        <br>
+        <form action="{{ url_for('add_song', playlist_name=playlist_name) }}" method="POST" class="form-horizontal">
+            <div class="form-group">
+                <label for="nombre">Nombre de la canción:</label>
+                <input type="text" id="nombre" name="nombre">
+            </div>
+            <div class="form-group">
+                <label for="artista">Nombre del artista:</label>
+                <input type="text" id="artista" name="artista">
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Añadir canción">
+            </div>
         </form>
-
-
-
-
     </main>
+    
+    
+    
     <footer>
         <p>MUSIC RECOMMENDATION SYSTEM! Redescubre la música</p>
     </footer>

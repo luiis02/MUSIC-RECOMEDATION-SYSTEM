@@ -22,8 +22,6 @@ class Playlist:
     def get_descripcion(self):
         return self.descripcion
 
-    def get_canciones(self):
-        return canciones
 
     #estilo es lo mismo que artista, es decir el usuario puede filtrar por estilos de musica o por cantantes
     def inicia_sin_anios(self,estilo,n_canciones):
@@ -40,18 +38,6 @@ class Playlist:
                     "artista": "ARTISTA 2"
                 },
                 {
-                    "nombre": "NOMBRE DE CANCION 3",
-                    "artista": "ARTISTA 3"
-                },
-                {
-                    "nombre": "NOMBRE DE CANCION 4",
-                    "artista": "ARTISTA 4"
-                },
-                {
-                    "nombre": "NOMBRE DE CANCION 5",
-                    "artista": "ARTISTA 5"  
-                },
-                                {
                     "nombre": "NOMBRE DE CANCION N",
                     "artista": "ARTISTA N"
                 }

@@ -25,22 +25,22 @@
         </nav>
     </header>
     <main>
-        <form method="POST" action="/add_playlist_gust" id="add-playlist2">
-            <h2>Añadir Playlist</h2>
-            <p id="warnings">{{ warnings }}</p>
-            <label for="name">Nombre de la playlist: *</label><br>
-            <input type="text" id="name" name="name" required><br><br>
-            <label for="description">Descripción:</label><br>
-            <input type="text" id="description" name="description"><br><br>
-            <label for="song_n">El número de canciones es aleatorio:</label><br>
-            <p>Variara entre 0 y 15, pero haz una estimación</p>
-            <input type="number" id="year" name="song_n" required><br><br>
-            <label for="name1">Gusto: *</label><br>
-            <input type="text" id="name1" name="name1" required><br><br>
-            <input type="submit" value="Añadir Playlist">
+        <form method="POST" action="/add_playlist_gust" id="add-playlist2" class="form-container">
+            <h2 class="form-title">Añadir Playlist</h2>
+            <p id="warnings" class="form-warning">{{ warnings }}</p>
+            <label for="name" class="form-label">Nombre de la playlist: *</label><br>
+            <input type="text" id="name" name="name" required class="form-input"><br><br>
+            <label for="description" class="form-label">Descripción:</label><br>
+            <textarea id="description" name="description" required class="form-textarea"></textarea><br><br>
+            <label for="song_n" class="form-label">Número de canciones:</label><br>
+            <input type="number" id="year" name="song_n" required class="form-input"><br><br>
+            <label for="name1" class="form-label">Escribe géneros músicales, estados de ánimo, años o artistas: </label><br>
+            <input type="text" id="name1" name="name1" required class="form-input"><br><br>
+            <input type="submit" value="Añadir Playlist" class="form-submit">
         </form>
-        <p>Tienes alguna dudas... Aqui va una explicación muy sencilla, el campo del nombre de la playlist y escoger un gusto son campos obligatorios, los años sirven para filtrar por epocas, aunque no son obligatorios</p>
+        <p class="form-explanation">La lista de reproducción se creerá con canciones </p>
     </main>
+    
 </body>
 
 </html>

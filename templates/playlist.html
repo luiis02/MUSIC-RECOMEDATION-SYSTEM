@@ -29,29 +29,26 @@
     </header>
 
     <main>
-
         <h2>Playlists de {{ username }}</h2>
-        <br>
-        <ul>
-
-            <ul class="playlist">
-                {% for row in playlists %}
-                <li>
+        <br><br>
+        <section class="playlists-container">
+            {% for row in playlists %}
+            <div class="playlist">
+                <h3>
                     <a href="{{ url_for('playlist_details', playlist_name=row[1]) }}">{{ row[1] }}</a>
-                    <p>{{ row[3] }}</p> 
-                    <a href="{{ url_for('delete_playlist', playlist_name=row[1]) }}">Borrar playlist</a>
-                </li>
-                <br>
-                {% endfor %}
-            </ul>
-
+                </h3>
+                <p>{{ row[3] }}</p>
+                <button type="button" onclick="location.href='{{ url_for('delete_playlist', playlist_name=row[1]) }}'">Borrar playlist</button><br>
+            </div>
+            {% endfor %}
+        </section>
+        <br>
+        <section class="add-playlists-buttons">
             <button type="button" onclick="location.href='{{ url_for('add_playlist') }}'">Añadir Playlist Vacia</button>
-            <br>
             <button type="button" onclick="location.href='{{ url_for('add_playlist_gust') }}'">Añadir Playlist Personalizada</button>
-            
-        </ul>
-
+        </section>
     </main>
+    
 
     <footer>
         <p>MUSIC RECOMMENDATION SYSTEM! Redescubre la música</p>
