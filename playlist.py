@@ -38,6 +38,18 @@ class Playlist:
                     "artista": "ARTISTA 2"
                 },
                 {
+                    "nombre": "NOMBRE DE CANCION 3",
+                    "artista": "ARTISTA 3"
+                },
+                {
+                    "nombre": "NOMBRE DE CANCION 4",
+                    "artista": "ARTISTA 4"
+                },
+                {
+                    "nombre": "NOMBRE DE CANCION 5",
+                    "artista": "ARTISTA 5"  
+                },
+                {
                     "nombre": "NOMBRE DE CANCION N",
                     "artista": "ARTISTA N"
                 }
